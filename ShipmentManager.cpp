@@ -11,6 +11,24 @@ void ShipmentManager::addOrder(const Order &newOrder)
 
 void ShipmentManager::removeDriver(const Driver &toRemove)
 {
+    std::list<Assignment>::iterator iter = assignments.begin();
+     for (;iter != assignments.end(); iter++)
+     {
+         if (iter->driver == &toRemove) 
+         {
+             Order* toUpdate = iter->order;
+             if(toUpdate->getStatus() == Order::Status::InProgress 
+                {
+                 toUpdate->setStatus(Order::Status::ToDo);
+             }
+                iter=assignments.erase(iter);
+                break;
+                }
+          }
+    driversDb.remove(toRemove);
+}
+void ShipmentManager::removeOrder(const Order &toRemove)
+
     driversDb.remove(toRemove);
 }
 void ShipmentManager::removeOrder(const Order &toRemove)
