@@ -153,7 +153,37 @@ void handleInput(const char input, ShipmentManager &manager)
         std::cout << "Exit!\n";
     }
     break;
-    
+    case 'd':
+{ // for debug purposes!
+{
+Driver newDriver;
+static double weight{10.f};
+static unsigned int hoursPerDay[daysPersWeek];
+weight += 1.5f;
+for (unsigned int i = 0; i < daysPersWeek; ++i)
+{
+hoursPerDay[i] = (hoursPerDay[i] + i) % hoursInDay;
+}
+newDriver.setMaxWeight(weight);
+newDriver.setHoursPerDay(hoursPerDay);
+manager.addDriver(newDriver);
+}
+{
+Order newOrder;
+static double weight{1.f};
+static unsigned int daysLeft{0}, hoursForDelivery{0};
+weight += 1.f;
+hoursForDelivery = (hoursForDelivery + 1) % hoursInDay;
+daysLeft += 1;
+newOrder.setWeight(weight);
+newOrder.setDaysLeft(daysLeft);
+newOrder.setHoursForDelivery(hoursForDelivery);
+newOrder.setStatus(Order::Status::ToDo);
+manager.addOrder(newOrder);
+}
+}
+break;
+default:
     {
         std::cout << "Enter the command between 1-9 or q for Exit!\n";
     }
