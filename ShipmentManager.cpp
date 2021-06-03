@@ -17,7 +17,7 @@ void ShipmentManager::removeDriver(const Driver &toRemove)
          if (iter->driver == &toRemove) 
          {
              Order* toUpdate = iter->order;
-             if(toUpdate->getStatus() == Order::Status::InProgress 
+             if(toUpdate->getStatus() == Order::Status::InProgress) 
                 {
                  toUpdate->setStatus(Order::Status::ToDo);
              }
@@ -28,7 +28,15 @@ void ShipmentManager::removeDriver(const Driver &toRemove)
     driversDb.remove(toRemove);
 }
 void ShipmentManager::removeOrder(const Order &toRemove)
-
+{
+    std::list<Assignment>::iterator iter=assignments.begin();
+     for(;iter!=assignments.end(); iter++)
+     {
+         if (iter->order == &toRemove) {
+             iter=assignments.erase(iter);
+             break;
+         }
+     }          
     driversDb.remove(toRemove);
 }
 void ShipmentManager::removeOrder(const Order &toRemove)
